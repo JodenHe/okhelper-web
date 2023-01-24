@@ -7,7 +7,7 @@
       <img src="@/assets/icon/ok-icon-red.png" width="100" height="100">
       <div class="change-font-button" style="color: #C20C0C">
         <span v-if="verification" @click="verification=false">账号密码登陆</span>
-        <span v-if="!verification" @click="verification=true">短信验证码登陆</span>
+        <!-- <span v-if="!verification" @click="verification=true">短信验证码登陆</span> -->
       </div>
     </div>
 
@@ -67,7 +67,7 @@
         <van-button @click="loginOk" style="background: #C20C0C" type="danger" size="large">登录</van-button>
         <span v-if="loginIsTrue" class="tishixiaoxi disappear" style="color: #C20C0C">{{loginMsg}}</span>
       </div>
-      <div style="float: right;margin-top: 50px">
+      <!-- <div style="float: right;margin-top: 50px">
         <router-link to="/user/register">
       <div class="register-icon" style="float:right;margin-right: 55px">
         <i class="ion-person-add"></i>
@@ -76,8 +76,8 @@
         <span style="float:right;margin-top: -10px;color: #C20C0C">立即注册</span>
       </div>
         </router-link>
-      </div>
-      <div style="float: left;margin-top: 50px">
+      </div> -->
+      <!-- <div style="float: left;margin-top: 50px">
         <router-link to="/user/register">
           <div class="register-icon" style="float:left;margin-left: 55px">
             <i class="ion-ios-help"></i>
@@ -86,7 +86,7 @@
             <span style="float:left;margin-top: -10px;color: #C20C0C" >忘记密码</span>
           </div>
         </router-link>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -113,7 +113,7 @@
               nameIsNull:true,
               pwdIsNull:true,
               loginIsTrue:false,
-              verification:true,
+              verification:false,
               sms:'',
               smsButtonText:'发送验证码',
               awaitSmS:false

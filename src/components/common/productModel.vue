@@ -57,16 +57,19 @@
         },   //挂载
         methods: {
           addProduct(goodsId){
-            if(this.salesStock==0){
-              Toast({
-                type:'text',
-                position: 'middle',
-                message: "库存为0，添加失败"
-              });
-            }else{
-              this.isActive=!this.isActive;
+            // if(this.salesStock==0){
+            //   Toast({
+            //     type:'text',
+            //     position: 'middle',
+            //     message: "库存为0，添加失败"
+            //   });
+            // }else{
+            //   this.isActive=!this.isActive;
+            //   this.$emit('addProduct',goodsId,this.isActive);
+            // }
+            this.isActive=!this.isActive;
               this.$emit('addProduct',goodsId,this.isActive);
-            }
+            
           },
           clickProduct(){
             if(this.isEdit){

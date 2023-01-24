@@ -20,7 +20,7 @@
         </router-link>
       </div>
     </div>
-    <div class="ok-sellOrStore-model">
+    <!-- <div class="ok-sellOrStore-model">
       <div class="ok-sellOrStore-box">
         <div class="ok-sellOrStore-icon">
           <i class="ion-ios-star"></i>
@@ -60,7 +60,7 @@
         </router-link>
       </div>
     </div>
-    <div style="clear: both" class="ok-border"></div>
+    <div style="clear: both" class="ok-border"></div> -->
     <div class="ok-sellOrStore-model">
       <div class="ok-sellOrStore-box" style="border-right:0.5px solid #F2F2F2;">
         <div class="ok-sellOrStore-icon">
@@ -79,13 +79,15 @@
         <div class="ok-sellOrStore-icon">
           <i style="color: cornflowerblue;" class="ion-ios-cart"></i>
         </div>
-        <div class="ok-sellOrStore-content">
-          <div>采购退货</div>
-          <div class="ok-sellOrStore-subcontent">向供应商退货</div>
-        </div>
+        <router-link to="/warehouse/outbound" style="color: black">
+          <div class="ok-sellOrStore-content">
+            <div>采购退货</div>
+            <div class="ok-sellOrStore-subcontent">向供应商退货</div>
+          </div>
+        </router-link>
       </div>
     </div>
-    <div class="ok-model-border"></div>
+    <!-- <div class="ok-model-border"></div>
     <div class="ok-sellOrStore-model">
       <div class="ok-sellOrStore-box" style="border-right:0.5px solid #F2F2F2;">
         <div class="ok-sellOrStore-icon">
@@ -107,7 +109,7 @@
           <div class="ok-sellOrStore-subcontent">仓库间调动</div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div style="clear: both" class="ok-border"></div>
     <ok-footer></ok-footer>
   </div>

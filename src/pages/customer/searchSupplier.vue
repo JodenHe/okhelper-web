@@ -73,6 +73,7 @@
     created() {
     },   //创建
     mounted() {
+      this.onLoad()
     },   //挂载
     methods: {
       choosedSupplier(index,supplierName,supplierId){

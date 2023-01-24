@@ -72,6 +72,7 @@
     created() {
     },   //创建
     mounted() {
+      this.onLoad();
     },   //挂载
     methods: {
       choosedWarehouse(index,warehouseName,warehouseId){

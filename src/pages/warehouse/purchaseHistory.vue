@@ -44,7 +44,7 @@
         </van-list>
       </div>
       <div v-else style="width: 100%;text-align: center;padding-bottom: 20px;margin-top: 10%">
-        <router-link to="/warehouse/addWarehouse">
+        <router-link to="/warehouse/purchaseOrder">
           <div style="width:30%;border: 1px solid black;border-radius: 5px;height: 40px;padding-left:10px;padding-right:10px;line-height: 40px;text-align: center;margin: 0 auto;">
             去新增采购单
           </div>

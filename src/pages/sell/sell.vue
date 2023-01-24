@@ -5,7 +5,7 @@
     <div id="" style="height: 100%;">
       <div  style="color:white;background: #C20C0C;font-size:16px;line-height:56px;height: 56px;width: 100%;text-align: center;">
         <div style="display: block;font-size: 20px;">销售</div>
-        <div style="display: block;float: right;margin-right: 20px;margin-top: -55px;" @click="show=!show">收款码</div>
+        <!-- <div style="display: block;float: right;margin-right: 20px;margin-top: -55px;" @click="show=!show">收款码</div> -->
       </div>
       <div class="ok-border"></div>
       <router-link to="/sell/sellTable" class="ok-sellOrStore-model">
@@ -31,7 +31,7 @@
         </div>
       </router-link>
       <div class="ok-model-border"></div>
-      <router-link to="/500" class="ok-sellOrStore-model">
+      <!-- <router-link to="/500" class="ok-sellOrStore-model">
         <div class="ok-sellOrStore-box" style="border-right:0.5px solid #F2F2F2;">
           <div class="ok-sellOrStore-icon">
             <i class="ion-reply"></i>
@@ -41,7 +41,7 @@
             <div class="ok-sellOrStore-subcontent">退货、换货</div>
           </div>
         </div>
-      </router-link>
+      </router-link> -->
       <router-link to="/sell/sellHistory" class="ok-sellOrStore-model">
         <div class="ok-sellOrStore-box" style="border-right:0.5px solid #F2F2F2;">
           <div class="ok-sellOrStore-icon">

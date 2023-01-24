@@ -13,7 +13,7 @@
       库存展示
       </div>
       <div class="back-bar-cancelBtn">
-        <router-link to="/product/productInfo" style="display:block;float:left;width: 25px;height: 25px;font-size: 25px;color: white;font-weight: bolder;">
+        <router-link to="/warehouse/purchaseOrder" style="display:block;float:left;width: 25px;height: 25px;font-size: 25px;color: white;font-weight: bolder;">
           <i class="ion-ios-plus-empty"></i>
         </router-link>
         <router-link to="/product/SearchProduct" style="margin-left:8px;display:block;float:left;width: 25px;height: 25px;font-size: 25px;color: white;font-weight: bolder;">

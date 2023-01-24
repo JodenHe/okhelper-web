@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="ok-model-border"></div>
-      <div class="ok-sellOrStore-model">
+      <!-- <div class="ok-sellOrStore-model">
         <div class="ok-sellOrStore-box" style="border-right:0.5px solid #F2F2F2;">
           <div class="ok-sellOrStore-icon">
             <i class="ion-reply"></i>
@@ -40,7 +40,7 @@
             <div class="ok-sellOrStore-subcontent">每天18点自动推送</div>
           </div>
         </div>
-      </div>
+      </div> -->
       <div style="clear: both" class="ok-border"></div>
       <div style="height: 70px;width: 100%;">
         <div style="width: 10%;height: 70px;margin-left: 20px;display: block;float: left;color: red;line-height: 70px;font-size: 25px;text-align: center;">
@@ -57,7 +57,7 @@
         </div>
       </div>
       <div class="ok-model-border"></div>
-      <div class="ok-sellOrStore-model">
+      <!-- <div class="ok-sellOrStore-model">
         <div class="ok-sellOrStore-box" style="border-right:0.5px solid #F2F2F2;">
           <div class="ok-sellOrStore-icon">
             <i class="ion-ios-analytics"></i>
@@ -101,7 +101,7 @@
             <div class="ok-sellOrStore-subcontent">销售、欠款信息</div>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="ok-model-border"></div>
       <div style="height: 50px;width: 100%;">
         <div style="width: 10%;height: 50px;margin-left: 20px;display: block;float: left;color: red;line-height: 50px;font-size: 25px;text-align: center;">

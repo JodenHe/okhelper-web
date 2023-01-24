@@ -71,6 +71,7 @@
         created() {
         },   //创建
         mounted() {
+          this.onLoad();
         },   //挂载
         methods: {
           choosedCustomer(index,customerName,customerId){

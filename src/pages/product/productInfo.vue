@@ -197,6 +197,7 @@
               var productDetail=JSON.parse(response.data.productAttribute);
               this.product=Object.assign(response.data,productDetail);
               this.productImgList=this.product.subImgs.split(",");
+              this.product.subImgs = this.product.subImgs.split(",")
               for(var i=0;i<this.productImgList.length;i++){
                 if(this.productImgList[i]==this.product.mainImg){
                   this.mainImg[i]=true;
@@ -237,7 +238,7 @@
             // this.productImgPath.remove(this.product.mainImg);//删除副图组中主图
           },
           deleteImg(index){//删除照片
-            this.productListShow[index]=false;
+            // this.productListShow[index]=false;
             Vue.set(this.productListShow,index,this.productListShow[index]);
             this.productImgList.splice(index,1);
             this.productImgPath.splice(index,1);//删除图片路径
@@ -247,7 +248,6 @@
           onRead(file) {//上传照片
                     // alert(1)
             if(this.productImgList.length<=6){//上传限制6张
-
               let formData = new FormData();
               if(file instanceof Array){//instanceof用于判断是否为已知类型
                 for(let item of file){
@@ -320,7 +320,16 @@
             this.showProductOtherInfo=true;
           },
           addNewOrUpdateProduct(id){
-            this.product.subImgs=this.productImgPath;//数组接收
+            if (this.product.subImgs instanceof Array) {
+              this.product.subImgs = this.product.subImgs.concat(this.productImgPath)
+            } else {
+              this.product.subImgs=this.productImgPath;//数组接收
+            }
+
+            if(this.product.subImgs.length > 0) {
+              this.product.mainImg=this.product.subImgs[0];
+            }
+            
             var productDetail={
               productColor:this.product.productColor,
               productSize:this.product.productSize,

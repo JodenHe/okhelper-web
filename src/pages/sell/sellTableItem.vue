@@ -34,7 +34,7 @@
           <ul style="list-style: none;background: #F2F2F2;width: 100%;height:50px;padding-top:5px;text-align: center;">
             <li class="sell-table-price-detail-open-li">
               <div>单价</div>
-              <input class="sell-table-price-detail-open-li-input" type="number" v-model="parentData.retailPrice" disabled/>
+              <input class="sell-table-price-detail-open-li-input" type="number" v-model="parentData.retailPrice" />
             </li>
             <li class="sell-table-price-detail-open-li">
               <div>折扣(%)</div>

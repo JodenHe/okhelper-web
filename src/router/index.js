@@ -42,7 +42,7 @@ const SupplierInfo = resolve => require(['@/pages/user/supplierInfo'], resolve);
 const AddSupplier = resolve => require(['@/pages/user/addSupplier'], resolve);
 const SupplierOrder = resolve => require(['@/pages/user/supplierOrder'], resolve);
 const Warehouse = resolve => require(['@/pages/warehouse/warehouse'], resolve);
-const WarehouseInfo = resolve => require(['@/pages/warehouse/WarehouseInfo'], resolve);
+const WarehouseInfo = resolve => require(['@/pages/warehouse/warehouseInfo'], resolve);
 const AddWarehouse = resolve => require(['@/pages/warehouse/addWarehouse'], resolve);
 const Stock = resolve => require(['@/pages/warehouse/stock'], resolve);
 const StockWarning = resolve => require(['@/pages/warehouse/stockWarning'], resolve);

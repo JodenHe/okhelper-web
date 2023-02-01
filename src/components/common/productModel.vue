@@ -12,7 +12,8 @@
             <div class="ok-product-details-name">{{productName}}</div>
             <div  class="ok-product-details-category-name">{{cateName}}</div>
             <div class="ok-product-details-discounts" >{{discounts}}</div>
-            <div class="ok-product-details-price" >￥{{retailPrice}}</div>
+            <div class="ok-product-details-price" >零售价：￥{{retailPrice}}</div>
+            <div class="ok-product-details-price" v-if="storagePrice != null">成本价：￥{{storagePrice}}</div>
             <div class="ok-product-details-addtime">上架时间：{{createTime | formateTime('YMDHM')}}</div>
             <div v-show="salesStock!=null"class="ok-product-details-addtime"> 库存：{{salesStock}}</div>
             <div v-show="salesVolume!=null" class="ok-product-details-addtime">销量：{{salesVolume}}</div>
@@ -43,6 +44,7 @@
           cateName: {},
           discounts: {required: false},
           retailPrice: {},
+          storagePrice: {},
           createTime: {},
           Id: {},
           index:{},

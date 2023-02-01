@@ -14,6 +14,7 @@
         <div  class="ok-product-details-category-name">{{cateName}}</div>
         <div class="ok-product-details-discounts" >{{discounts}}</div>
         <div class="ok-product-details-price" >零售价：￥{{retailPrice}}</div>
+        <div class="ok-product-details-price" v-if="storagePrice != null">成本价：￥{{storagePrice}}</div>
         <div class="ok-product-details-addtime">上架时间：{{createTime | toTime}}</div>
         <div class="ok-product-details-addtime">库存：<span style="color: #C20C0C">{{salesStock}}</span></div>
       </div>
@@ -40,6 +41,7 @@
       cateName: {},
       discounts: {},
       retailPrice: {},
+      storagePrice: {},
       createTime: {},
       Id: {},
       index:{},

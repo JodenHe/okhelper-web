@@ -59,6 +59,7 @@
                 :cate-name="item.cateName"
                 :discounts="item.youhui"
                 :retail-price="item.retailPrice"
+                :storage-price="item.storagePrice"
                 :createTime="item.createTime"
                 :Id="item.id"
                 :index="index"

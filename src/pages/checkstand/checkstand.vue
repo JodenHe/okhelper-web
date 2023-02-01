@@ -3,7 +3,7 @@
 *收银台
 */
 <template>
-    <div id="">
+    <div id="" style="display: flex;flex-direction: column;">
       <div>
         <div style="color: white;height:56px;background:#C20C0C;font-size: 18px;margin: 0 auto;width: 100%;text-align: center;line-height: 56px;">
           <span>销售单详情</span>
@@ -146,7 +146,7 @@
         </div>
         <div style="margin-top: 15px;" class="ok-border"></div>
       </div>
-      <div style="position: fixed;bottom: 0px; width: 100%;">
+      <div style="bottom: 0px; width: 100%;">
         <div v-if="item.orderStatus==1 || item.orderStatus==2" @click="toGatheringPage" style="height: 40px;width: 100%;background: #5cb85c; color: white;text-align: center;line-height: 40px; margin-bottom: 5px;">去结账</div>
         <div v-if="item.logisticsStatus!=3 && item.orderStatus!=5" @click="confirmReceipt" style="height: 40px;width: 100%;background: #337ab7; color: white;text-align: center;line-height: 40px; margin-bottom: 5px;">确认收货</div>
         <div v-if="item.orderStatus==1" @click="closeOrder" style="height: 40px;width: 100%;background: #c9302c; color: white;text-align: center;line-height: 40px; margin-bottom: 5px;">关闭订单</div>

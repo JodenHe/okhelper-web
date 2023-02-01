@@ -116,6 +116,7 @@
                   message: '销售数量不能大于库存'
                 });
               this.parentData.productCount=this.parentData.salesStock;
+              return;
             }
 
             if(this.parentData.productCount<1){

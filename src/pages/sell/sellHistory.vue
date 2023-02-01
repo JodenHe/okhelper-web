@@ -54,8 +54,8 @@
         @load="onLoad"
       >
         <div v-for="(item,index) in orderList">
-          <div class="employee-info-box" style="height: 80px;width: auto;display: block;padding-left: 20px;">
-            <div style="display: block;float: left;width: 10%;height:80px;line-height: 80px;font-size: 30px;">
+          <div class="employee-info-box" style="height: 80px;width: auto;display: block;padding-left: 20px;" @click="soDetails(item)">
+            <div style="display: block;float: left;width: 10%;line-height: 80px;font-size: 30px;">
 
               <i v-if="item.orderStatus==1" style="color:orange" class="ion-ios-timer-outline"></i>
               <i v-if="item.orderStatus==4" style="color:#66CD00" class="ion-ios-checkmark"></i>
@@ -63,7 +63,7 @@
               <i v-if="item.orderStatus==5" style="color:#575757" class="ion-ios-close-outline"></i>
               <i v-if="item.orderStatus==2" style="color:#C20C0C" class="ion-clipboard"></i>
             </div>
-            <div style="display: block;float: left;width: 60%;height:80px;padding-top: 8px;padding-left: 5px;">
+            <div style="display: block;float: left;width: 60%;padding-top: 8px;padding-left: 5px;">
               <div style="display: block;float: left;font-size: 16px;">{{item.customerName}}</div>
               <div
                 style="display: block;float: left;width:auto;color:white;padding-left:3px;padding-right:3px;background: orange;border-radius: 5px;margin-left: 10px;">
@@ -71,9 +71,10 @@
               </div>
               <div style="clear: both;">{{item.orderNumber}}</div>
               <div>业务时间：{{item.createTime | formateTime('YMDHM')}}</div>
+              <div>{{item.remarks}}</div>
             </div>
             <div
-              style="font-size:14px;padding-top: 8px;height:80px;display: block;float: left;width: 30%;height:80px;text-align: center;">
+              style="font-size:14px;padding-top: 8px;display: block;float: left;width: 30%;text-align: center;">
               <div style="text-decoration: underline;">销：{{item.productCount}}</div>
               <div style="font-size:16px;color: orange;line-height: 40px;">￥{{item.sumPrice | formateMoney}}</div>
               <!--<div style="font-size:12px;color: #888888;">1号仓库</div>-->
@@ -108,7 +109,7 @@
         orderList:[],
         loading: false,
         finished: false,
-        myData:{paging:true,pageNum:0,limit:10,orderStatus:null,orderBy:'create_time desc'}
+        myData:{paging:true,pageNum:0,limit:10,orderStatus:null,orderBy:'order_status asc,create_time desc'}
       };
     },
     computed: {},  //计算属性
@@ -170,6 +171,11 @@
         this.myData.pageNum = 0;
         this.finished = false;
         this.onLoad();
+      },
+      soDetails(item) {
+        if (item.orderStatus == 1 || item.orderStatus == 2) {
+          this.$router.push({path:'/checkstand',query:{saleOrderId:item.id,sumPrice:item.sumPrice,orderNumber:item.orderNumber,customerName:item.customerName}})
+        }
       },
     },   //方法
     watch: {}      //监听

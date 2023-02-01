@@ -126,6 +126,9 @@ var getProductById=id=>ajax('get','/api/product/'+id);
 //查询销售历史订单
 var getSellHistoryList=myData=>ajax('get','/api/sale/sale_table',myData);
 
+//查询单个销售订单
+var getSellOrderById=id=>ajax('get','/api/sale/'+id);
+
 //查询临期商品
 var getEarlyWarningList=(myData,days)=>ajax('get','/api/product/nearDay/'+days,myData);
 
@@ -199,6 +202,7 @@ export {
   updateProduct,
   addCategory,
   getSellHistoryList,
+  getSellOrderById,
   getEarlyWarningList,
   getCustomerDebtList,
   getSupplierDebtList,

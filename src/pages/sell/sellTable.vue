@@ -89,10 +89,14 @@
         <input style="height: 50px;font-size: 16px;width: 70%;margin-left: 20px;" type="text" v-model="remarks"/>
       </div>
       <div style="clear: both" class="ok-border"></div>
-      <div style="width: 100%;height: 40px;bottom: 0;position: fixed;border-top:1px solid #F2F2F2 ">
-        <div style="margin-left:20px;font-size: 14px;height: 40px;line-height:40px;background: white;width: 60%;display: block;float: left;" v-model="choosedProductMap.length">合计：{{Object.keys(choosedProductMap).length}}件&nbsp;&nbsp;&nbsp;<span style="color: orange;">￥{{shouldPayMoney}}</span></div>
-        <div @click="placeOrder" style="width: 30%;height: 40px;display: block;float: right;color:white;background: cadetblue;text-align:center;line-height:40px;font-size: 14px;">出售</div>
+      <div style="margin-bottom: 56px;">
+        <div style="width: 100%;height: 40px; border-top:1px solid #F2F2F2 ">
+          <div style="margin-left:20px;font-size: 14px;height: 40px;line-height:40px;background: white;width: 60%;display: block;float: left;" v-model="choosedProductMap.length">合计：{{Object.keys(choosedProductMap).length}}件&nbsp;&nbsp;&nbsp;<span style="color: orange;">￥{{shouldPayMoney}}</span></div>
+          <div @click="placeOrder" style="width: 30%;height: 40px;display: block;float: right;color:white;background: cadetblue;text-align:center;line-height:40px;font-size: 14px;">出售</div>
+        </div>
+        <div style="clear: both" class="ok-border"></div>
       </div>
+      <ok-footer></ok-footer>
 
       <ok-customer
         :parentData="parentData"
@@ -102,6 +106,8 @@
 
 <script>
   const Back = resolve => require(['@/components/common/backBar'], resolve);
+  const Footer = resolve => require(['@/components/footer/footer'], resolve);
+
   import sellTableItem from '@/pages/sell/sellTableItem';
   import {getCustomerList,getProductById,placeOrder} from '@/service/getData.js'
   import Scan from '@/components/common/scan';
@@ -114,7 +120,8 @@
           'ok-back':Back,
           sellTableItem,
           'ok-customer':SearchCustomer,
-          'ok-scan':Scan
+          'ok-scan':Scan,
+          'ok-footer':Footer
         },//注册组件
         data() {         //数据
             return {
@@ -191,7 +198,7 @@
             for(let key in this.choosedProductMap){
               productList.push({productId:x[key].id,saleCount:x[key].productCount,salePrice:(parseFloat(x[key].retailPrice * x[key].discounts/100).toFixed(2))});
             }
-            placeOrder({customerId:this.parentData.customerId,sumPrice:this.shouldPayMoney,discountPrice:this.totalDiscountedMoney,remarks:"",placeOrderItemDtos:productList})
+            placeOrder({customerId:this.parentData.customerId,sumPrice:this.shouldPayMoney,discountPrice:this.totalDiscountedMoney,remarks:this.remarks,placeOrderItemDtos:productList})
             .then(response=>{
                 Toast.clear();
                 this.$router.push({path:'/checkstand',query:{saleOrderId:response.data.id,sumPrice:response.data.sumPrice,orderNumber:response.data.orderNumber,customerName:this.parentData.customerName}})

@@ -26,6 +26,13 @@
           <input style="height: 30px;font-size: 14px;width: 100%;padding-left: 30px" disabled placeholder="零售客户" type="text" v-model="customerName"/>
         </div>
       </div>
+      <div class="ok-model-border"></div>
+      <div style="width: 100%;height: 40px;line-height: 40px;font-size: 16px;color: #888888">
+        <div style="width:25%;display: block;float: left;padding-left: 20px;">备注</div>
+        <div style="height:43px;width:70%;display: block;float: left;">
+          <input style="height: 30px;font-size: 14px;width: 100%;padding-left: 30px" disabled type="text" v-model="remarks"/>
+        </div>
+      </div>
       <!-- <div class="ok-model-border"></div>
       <div style="width: 100%;height: 40px;line-height: 40px;font-size: 16px;color: #888888">
         <div style="width:25%;display: block;float: left;padding-left: 20px;">商品数量</div>
@@ -43,6 +50,20 @@
       <div class="ok-model-border"></div>
       <div style="width: 100%;height: 40px;line-height: 40px;font-size: 16px;color: #888888">
         <div style="width:25%;display: block;float: left;padding-left: 20px;">应收金额</div>
+        <div style="height:43px;width:70%;display: block;float: left;">
+          <input style="height: 30px;font-size: 16px;width: 100%;padding-left: 30px" disabled type="number" v-model="sumPrice"/>
+        </div>
+      </div>
+      <div class="ok-model-border"></div>
+      <div style="width: 100%;height: 40px;line-height: 40px;font-size: 16px;color: #888888">
+        <div style="width:25%;display: block;float: left;padding-left: 20px;">已付金额</div>
+        <div style="height:43px;width:70%;display: block;float: left;">
+          <input style="height: 30px;font-size: 16px;width: 100%;padding-left: 30px" disabled type="number" v-model="realPay"/>
+        </div>
+      </div>
+      <div class="ok-model-border"></div>
+      <div style="width: 100%;height: 40px;line-height: 40px;font-size: 16px;color: #888888">
+        <div style="width:25%;display: block;float: left;padding-left: 20px;">未付金额</div>
         <div style="height:43px;width:40%;display: block;float: left;">
           <input style="height: 30px;font-size: 16px;width: 100%;color: orange;padding-left: 30px" disabled type="number" v-model="paymoney"/>
         </div>
@@ -51,6 +72,7 @@
           <input style="height: 30px;font-size: 12px;width: 100%;padding-left: 10px;" placeholder="0.00" type="number" v-model="notSmallChange"/>
         </div> -->
       </div>
+      
       <div class="ok-border"></div>
       <div style="width: 100%;height: 40px;line-height: 40px;font-size: 16px;color: #888888">
         <div style="width:25%;display: block;float: left;padding-left: 20px;">结算方式</div>
@@ -90,7 +112,7 @@
         <div style="margin:10px;float:right;background: white;padding-left: 10px;padding-right: 10px;width: auto;height: 20px;line-height:20px;color: black;font-size: 10px;">收款合计：￥{{totalMoney | formateMoney}}</div>
       </div>
       <div style="clear: both;" class="ok-model-border"></div>
-      <div @click="showUnitPay" :class="[showUnit?'showunit':'']" style="margin:10px;float:right;background: #108ee9;padding-left: 10px;padding-right: 10px;width: auto;height: 20px;line-height:20px;color: white;font-size: 10px;">{{showUnit?'取消组合':'组合收款'}}</div>
+      <!-- <div @click="showUnitPay" :class="[showUnit?'showunit':'']" style="margin:10px;float:right;background: #108ee9;padding-left: 10px;padding-right: 10px;width: auto;height: 20px;line-height:20px;color: white;font-size: 10px;">{{showUnit?'取消组合':'组合收款'}}</div> -->
       <div style="clear: both;" class="ok-border"></div>
       <!--<div style="width: 100%;height: 40px;line-height: 40px;font-size: 16px;color: #888888">-->
         <!--<div style="width:25%;display: block;float: left;padding-left: 20px;">欠款</div>-->
@@ -105,12 +127,12 @@
             <input style="height: 30px;font-size: 14px;width: 100%;color: black;" placeholder="0.00" disabled type="number" v-model="debtMony" />
           </div>
         </div>
-      <div style="width: 100%;height: 40px;line-height: 40px;font-size: 16px;color: #888888">
+      <!-- <div style="width: 100%;height: 40px;line-height: 40px;font-size: 16px;color: #888888">
         <div style="width:25%;display: block;float: left;padding-left: 20px;">备注</div>
         <div style="height:43px;width:70%;display: block;float: left;border-bottom: 1px solid #2D84FF;">
           <input style="height: 30px;font-size: 14px;width: 100%;color: black;" type="text" v-model="remark"/>
         </div>
-      </div>
+      </div> -->
       <div style="margin-top: 15px;" class="ok-border"></div>
       <div @click="toGatheringPage" style="position: fixed;bottom: 0px;height: 40px;width: 100%;background: #C20C0C;color: white;text-align: center;line-height: 40px;">去结账</div>
       <ok-gathering
@@ -121,7 +143,7 @@
 
 <script>
   import Gathering from '@/pages/checkstand/gathering'
-  import {pay} from '@/service/getData.js'
+  import {pay, getSellOrderById} from '@/service/getData.js'
   import { Toast } from 'vant';
     export default {
         mixins: [],     //混合
@@ -130,6 +152,9 @@
         },//注册组件
         data() {         //数据
             return {
+              sumPrice: 0.00,
+              realPay: 0.00,
+              toBePaid: 0.00,
               paymoney:0.00,//应付金额
               notSmallChange:0,
               payType:'现金',
@@ -163,9 +188,22 @@
         methods: {
           initData(){
             this.parentData.orderId=this.$route.query.saleOrderId;//订单Id
-            this.orderNumber=this.$route.query.orderNumber;
-            this.customerName=this.$route.query.customerName;
-            this.paymoney=parseFloat(this.$route.query.sumPrice).toFixed(2);
+            getSellOrderById(this.parentData.orderId).then(response=>{
+              console.log(response)
+              this.orderNumber= response.data.orderNumber;
+              this.customerName= response.data.customerName;
+              this.remarks = response.data.remarks;
+              this.sumPrice=parseFloat(response.data.sumPrice).toFixed(2);
+              this.realPay=parseFloat(response.data.realPay).toFixed(2);
+              this.paymoney=parseFloat(response.data.toBePaid).toFixed(2);
+            },error=>{
+              Toast.clear();
+              Toast({
+                type:'text',
+                position: 'middle',
+                message: error==null?"系统异常":error.msg
+              });
+            });
           },
           toGatheringPage(){
             if(this.parentData.pay2Money!=0&&this.parentData.pay1Money!=0){
@@ -179,7 +217,12 @@
                   this.parentData.gatheringShow=true;
                   this.parentData.showCashResult=true;
                 },error=>{
-
+                  Toast.clear();
+                  Toast({
+                    type:'text',
+                    position: 'middle',
+                    message: error==null?"系统异常":error.msg
+                  });
                 }
               );
             }else if(this.parentData.pay1Money!=0){
@@ -202,7 +245,12 @@
                     });
                   }
                 },error=>{
-
+                  Toast.clear();
+                  Toast({
+                    type:'text',
+                    position: 'middle',
+                    message: error==null?"系统异常":error.msg
+                  });
                 }
               );
             }else if(this.parentData.pay1Money==0){

@@ -29,6 +29,8 @@
         <li @click="sellTableStatus(3)" :class="{statusActive:isPaid}" class="ok-hotsell-time-li">已付款</li>
         <li @click="sellTableStatus(4)" :class="{statusActive:isArrearage}" class="ok-hotsell-time-li">已完成</li>
         <li @click="sellTableStatus(5)" :class="{statusActive:isClose}" class="ok-hotsell-time-li">已关闭</li>
+        <li @click="sellTableStatus(11)" :class="{statusActive:isNoSend}" class="ok-hotsell-time-li">未发货</li>
+        <li @click="sellTableStatus(13)" :class="{statusActive:isReceveied}" class="ok-hotsell-time-li">已送达</li>
       </ul>
     </div>
     <div style="background: #F2F2F2;height: 60px; width: 100%;font-size: 12px;clear: both;line-height: 30px;">
@@ -113,6 +115,8 @@
         isFinished: false,
         isArrearage: false,
         isClose: false,
+        isNoSend: false,
+        isReceveied: false,
         orderList:[],
         loading: false,
         finished: false,
@@ -132,6 +136,8 @@
         this.isFinished = false;
         this.isArrearage = false;
         this.isClose = false;
+        this.isNoSend = false;
+        this.isReceveied = false;
         switch (n) {
           case 0:
             this.isAll = true;
@@ -161,6 +167,18 @@
           case 5:
             this.isClose = true;
             this.myData.orderStatus=5;
+            this.reLoad();
+            break;
+          case 11:
+            this.isNoSend = true;
+            this.myData.orderStatus=null;
+            this.myData.logisticsStatus=1;
+            this.reLoad();
+            break;
+          case 13:
+            this.isReceveied = true;
+            this.myData.orderStatus=null;
+            this.myData.logisticsStatus=3;
             this.reLoad();
             break;
           default:

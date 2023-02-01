@@ -5,7 +5,7 @@
 <template>
     <div id="">
       <div style="color: white;height:56px;background:#C20C0C;font-size: 18px;margin: 0 auto;width: 100%;text-align: center;line-height: 56px;">
-        <span>收银台</span>
+        <span>销售单详情</span>
         <span @click="$router.back()" style="float: left;font-size: 25px;width: 56px;height: 20px;color: white;margin-left: 10px;" >
           <i class="ion-ios-arrow-left"></i><span style="font-size: 16px;position:relative;top: -3px;">&nbsp;返回</span>
         </span>
@@ -133,17 +133,32 @@
           <input style="height: 30px;font-size: 14px;width: 100%;color: black;" type="text" v-model="remark"/>
         </div>
       </div> -->
+      <div class="ok-model-border"></div>
+      <div style="width: 100%;">
+        <div v-for="item in item.saleOrderItemVos" class="ok-text-box" style="width: 100%; margin: 0 0 10px 0; height: 50px; display: auto;">
+          <div class="ok-text-name" style="width: auto;">商品名称：<span style="color: #C20C0C;" class="ok-product-details-name">{{item.productName}}</span></div><br>
+          <div class="ok-text-name2" style="margin-left: 1%;width: 100%">
+            商品数量：<span style="color: #C20C0C">{{item.saleCount}}</span>   <span style="margin-left: 3%">销售价：<span style="color: #C20C0C">{{item.salePrice}}</span></span>
+          </div>
+        </div>
+        
+      </div>
       <div style="margin-top: 15px;" class="ok-border"></div>
-      <div @click="toGatheringPage" style="position: fixed;bottom: 0px;height: 40px;width: 100%;background: #C20C0C;color: white;text-align: center;line-height: 40px;">去结账</div>
-      <ok-gathering
+      <div style="position: fixed;bottom: 0px; width: 100%;">
+        <div v-if="item.orderStatus==1 || item.orderStatus==2" @click="toGatheringPage" style="height: 40px;width: 100%;background: #5cb85c; color: white;text-align: center;line-height: 40px; margin-bottom: 5px;">去结账</div>
+        <div v-if="item.logisticsStatus!=3 && item.orderStatus!=5" @click="confirmReceipt" style="height: 40px;width: 100%;background: #337ab7; color: white;text-align: center;line-height: 40px; margin-bottom: 5px;">确认收货</div>
+        <div v-if="item.orderStatus==1" @click="closeOrder" style="height: 40px;width: 100%;background: #c9302c; color: white;text-align: center;line-height: 40px; margin-bottom: 5px;">关闭订单</div>
+      </div>
+      
+      <!-- <ok-gathering
         :parentData="parentData"
-      ></ok-gathering>
+      ></ok-gathering> -->
     </div>
 </template>
 
 <script>
   import Gathering from '@/pages/checkstand/gathering'
-  import {pay, getSellOrderById} from '@/service/getData.js'
+  import {pay, getSellOrderById, closeSoById, confirmReceiptById} from '@/service/getData.js'
   import { Toast } from 'vant';
     export default {
         mixins: [],     //混合
@@ -152,6 +167,9 @@
         },//注册组件
         data() {         //数据
             return {
+              item: {
+                saleOrderItemVos: []
+              },
               sumPrice: 0.00,
               realPay: 0.00,
               toBePaid: 0.00,
@@ -161,6 +179,7 @@
               payType2:'支付宝',
               discount:100,
               remark:'',
+              remarks: '',
               showUnit:false,
               parentData:{gatheringShow:false,showCashResult:false,pay1Money:0,pay2Money:0,orderId:''},
               orderNumber:'',
@@ -190,6 +209,7 @@
             this.parentData.orderId=this.$route.query.saleOrderId;//订单Id
             getSellOrderById(this.parentData.orderId).then(response=>{
               console.log(response)
+              this.item = response.data;
               this.orderNumber= response.data.orderNumber;
               this.customerName= response.data.customerName;
               this.remarks = response.data.remarks;
@@ -233,7 +253,8 @@
                 payType:1
               }).then(
                 response=>{
-                  if(this.parentData.pay1Money<this.paymoney){
+                  this.initData();
+                  if(this.parentData.pay1Money<this.paymoney){             
                     Toast({
                       position: 'bottom',
                       message: '支付成功！尚欠款'+(parseFloat(this.paymoney-this.parentData.pay1Money).toFixed(2)).toString()
@@ -268,6 +289,46 @@
           showUnitPay(){
             this.parentData.pay2Money=0;
             this.showUnit=!this.showUnit;
+          },
+          confirmReceipt() {
+            confirmReceiptById(this.item.id).then(
+                response=>{
+                  this.initData();
+                  Toast.clear();
+                  Toast({
+                    type:'text',
+                    position: 'middle',
+                    message: response==null?"系统异常":response.msg
+                  });
+                },error=>{
+                  Toast.clear();
+                  Toast({
+                    type:'text',
+                    position: 'middle',
+                    message: error==null?"系统异常":error.msg
+                  });
+                }
+              );
+          },
+          closeOrder() {
+            closeSoById(this.item.id).then(
+                response=>{
+                  this.initData();
+                  Toast.clear();
+                  Toast({
+                    type:'text',
+                    position: 'middle',
+                    message: response==null?"系统异常":response.msg
+                  });
+                },error=>{
+                  Toast.clear();
+                  Toast({
+                    type:'text',
+                    position: 'middle',
+                    message: error==null?"系统异常":error.msg
+                  });
+                }
+              );
           }
         },   //方法
         watch: {}      //监听

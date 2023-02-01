@@ -180,6 +180,12 @@ var changeMyAvator=myData=>ajax('post','/api/upload/avator/me',myData);
 //修改个人信息
 var updateStoreManager=myData=>ajax('put','/api/user/myInfo',myData);
 
+// 关闭销售订单
+var closeSoById=id=>ajax('post','/api/sale/close_order/'+id);
+
+// 确认收货
+var confirmReceiptById=id=>ajax('post','/api/sale/confirm_receipt/'+id);
+
 export {
   login,
   getMenuCodeList,
@@ -238,5 +244,7 @@ export {
   getRoleList,
   getEmployeeByUserName,
   changeEmployeeRoleListByUserName,
-  changeMyAvator
+  changeMyAvator,
+  closeSoById,
+  confirmReceiptById,
 }

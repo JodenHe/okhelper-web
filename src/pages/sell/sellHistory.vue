@@ -23,10 +23,12 @@
     <div class="ok-model-border"></div>
     <div style="margin-top: 56px;">
       <ul style="width: 100%;list-style:none;">
-        <li @click="sellTableStatus(1)" :class="{statusActive:isAll}" class="ok-hotsell-time-li">所有</li>
+        <li @click="sellTableStatus(0)" :class="{statusActive:isAll}" class="ok-hotsell-time-li">所有</li>
+        <li @click="sellTableStatus(1)" :class="{statusActive:isNoPayment}" class="ok-hotsell-time-li">未付款</li>
         <li @click="sellTableStatus(2)" :class="{statusActive:isFinished}" class="ok-hotsell-time-li">有欠款</li>
-        <li @click="sellTableStatus(3)" :class="{statusActive:isArrearage}" class="ok-hotsell-time-li">已完成</li>
-        <li @click="sellTableStatus(4)" :class="{statusActive:isClose}" class="ok-hotsell-time-li">已关闭</li>
+        <li @click="sellTableStatus(3)" :class="{statusActive:isPaid}" class="ok-hotsell-time-li">已付款</li>
+        <li @click="sellTableStatus(4)" :class="{statusActive:isArrearage}" class="ok-hotsell-time-li">已完成</li>
+        <li @click="sellTableStatus(5)" :class="{statusActive:isClose}" class="ok-hotsell-time-li">已关闭</li>
       </ul>
     </div>
     <div style="background: #F2F2F2;height: 60px; width: 100%;font-size: 12px;clear: both;line-height: 30px;">
@@ -65,10 +67,10 @@
             </div>
             <div style="display: block;float: left;width: 60%;padding-top: 8px;padding-left: 5px;">
               <div style="display: block;float: left;font-size: 16px;">{{item.customerName}}</div>
-              <div
+              <!-- <div
                 style="display: block;float: left;width:auto;color:white;padding-left:3px;padding-right:3px;background: orange;border-radius: 5px;margin-left: 10px;">
                 重点客户
-              </div>
+              </div> -->
               <div style="clear: both;">{{item.orderNumber}}</div>
               <div>业务时间：{{item.createTime | formateTime('YMDHM')}}</div>
               <div>{{item.remarks}}</div>
@@ -87,11 +89,13 @@
     <div v-if="myData.pageNum!=0&&orderList.length==0&&finished==true" style="color: #888888;text-align: center;padding: 20px;">
       没有此类销售单
     </div>
-
+    <div style="margin-bottom: 56px;"></div>
+    <ok-footer></ok-footer>
   </div>
 </template>
 
 <script>
+  const Footer = resolve => require(['@/components/footer/footer'], resolve);
   import {List} from 'vant';
   import {getSellHistoryList} from '@/service/getData';
   import Vue from 'vue'
@@ -99,17 +103,20 @@
   export default {
     mixins: [],     //混合
     components: {
+      'ok-footer':Footer
     },//注册组件
     data() {         //数据
       return {
         isAll: true,
+        isNoPayment: false,
+        isPaid: false,
         isFinished: false,
         isArrearage: false,
         isClose: false,
         orderList:[],
         loading: false,
         finished: false,
-        myData:{paging:true,pageNum:0,limit:10,orderStatus:null,orderBy:'order_status asc,create_time desc'}
+        myData:{paging:true,pageNum:0,limit:100,orderStatus:null,orderBy:'create_time desc'}
       };
     },
     computed: {},  //计算属性
@@ -120,13 +127,20 @@
     methods: {
       sellTableStatus(n) {
         this.isAll = false;
+        this.isNoPayment = false;
+        this.isPaid = false;
         this.isFinished = false;
         this.isArrearage = false;
         this.isClose = false;
         switch (n) {
-          case 1:
+          case 0:
             this.isAll = true;
             this.myData.orderStatus=null;
+            this.reLoad();
+            break;
+          case 1:
+            this.isNoPayment = true;
+            this.myData.orderStatus=1;
             this.reLoad();
             break;
           case 2:
@@ -135,11 +149,16 @@
             this.reLoad();
             break;
           case 3:
+            this.isPaid = true;
+            this.myData.orderStatus=3;
+            this.reLoad();
+            break;
+          case 4:
             this.isArrearage = true;
             this.myData.orderStatus=4;
             this.reLoad();
             break;
-          case 4:
+          case 5:
             this.isClose = true;
             this.myData.orderStatus=5;
             this.reLoad();
@@ -173,9 +192,7 @@
         this.onLoad();
       },
       soDetails(item) {
-        if (item.orderStatus == 1 || item.orderStatus == 2) {
-          this.$router.push({path:'/checkstand',query:{saleOrderId:item.id,sumPrice:item.sumPrice,orderNumber:item.orderNumber,customerName:item.customerName}})
-        }
+        this.$router.push({path:'/checkstand',query:{saleOrderId:item.id}})
       },
     },   //方法
     watch: {}      //监听

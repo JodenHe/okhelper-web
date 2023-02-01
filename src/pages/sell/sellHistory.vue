@@ -120,7 +120,7 @@
         orderList:[],
         loading: false,
         finished: false,
-        myData:{paging:true,pageNum:0,limit:100,orderStatus:null,orderBy:'create_time desc'}
+        myData:{paging:true,pageNum:0,limit:10,orderStatus:null,orderBy:'create_time desc'}
       };
     },
     computed: {},  //计算属性
